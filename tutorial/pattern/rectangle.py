@@ -14,7 +14,4 @@ y_start = 50
 box_width = 100
 box_height = 100
 
-for y in range(y_start, y_start + box_height):
-    for x in range(x_start, x_start + box_width):
-        if y < height and x < width:
-            display.pixel(x, y, 0xffff)
+display.fill_rectangle(x_start, y_start, box_width, box_height, color=0xffff)
