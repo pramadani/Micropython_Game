@@ -1,0 +1,1 @@
+This is the library folder used in the Sokoban and tutorial folders. Copy or upload the lib folder directly to the Pico.

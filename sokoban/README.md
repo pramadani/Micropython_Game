@@ -1,0 +1,1 @@
+This is the main game folder. Copy or upload the levels and main.py files directly to the Pico.
