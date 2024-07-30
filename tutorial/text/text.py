@@ -1,4 +1,4 @@
-from ili934xnew import ILI9341
+from ili9341 import ILI9341
 from machine import Pin, SPI
 import glcdfont
 import tt14
