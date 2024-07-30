@@ -181,6 +181,9 @@ class ILI9341:
         data = self.spi.read(count)
         self.cs(1)
         return data
+    
+    def display_block(self, x, y, buffer, width, height):
+        self._writeblock(x, y, x + width - 1, y + height - 1, buffer)
 
     def pixel(self, x, y, color=None):
         if color is None:

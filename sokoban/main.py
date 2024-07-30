@@ -1,9 +1,7 @@
-from ili9341 import ILI9341, color565
+from ili9341 import ILI9341
 from machine import Pin, SPI
-from machine import Pin, ADC
-from time import sleep
+from machine import Pin
 from keyeradc import read_adc
-import gc
 
 spi = SPI(0, baudrate=20000000, miso=Pin(20),mosi=Pin(19), sck=Pin(18))
 display = ILI9341(spi, cs=Pin(17), dc=Pin(27), rst=Pin(16), w=320, h=240, r=2)
@@ -42,28 +40,25 @@ class Game:
             self.matrix = [[c for c in line if self.is_valid_value(c)] for line in levels[level_key]]
         else:
             print(f"Level {level} not found!")
-                
-    def display_block(self, x, y, buffer, width=32, height=32):
-        display._writeblock(x, y, x + width - 1, y + height - 1, buffer)
 
     def print_game(self):
         block_size = 32
         for y, row in enumerate(self.matrix):
             for x, char in enumerate(row):
                 if char == '#':
-                    self.display_block(x * block_size + 8, y * block_size, self.wall)
+                    display.display_block(x * block_size + 8, y * block_size, self.wall, block_size, block_size)
                 elif char == ' ':
-                    self.display_block(x * block_size + 8, y * block_size, self.floor)
+                    display.display_block(x * block_size + 8, y * block_size, self.floor, block_size, block_size)
                 elif char == '$':
-                    self.display_block(x * block_size + 8, y * block_size, self.box)
+                    display.display_block(x * block_size + 8, y * block_size, self.box, block_size, block_size)
                 elif char == '@':
-                    self.display_block(x * block_size + 8, y * block_size, self.player)
+                    display.display_block(x * block_size + 8, y * block_size, self.player, block_size, block_size)
                 elif char == '+':
-                    self.display_block(x * block_size + 8, y * block_size, self.worker_dock)
+                    display.display_block(x * block_size + 8, y * block_size, self.worker_dock, block_size, block_size)
                 elif char == '*':
-                    self.display_block(x * block_size + 8, y * block_size, self.box_docked)
+                    display.display_block(x * block_size + 8, y * block_size, self.box_docked, block_size, block_size)
                 elif char == '.':
-                    self.display_block(x * block_size + 8, y * block_size, self.dock)
+                    display.display_block(x * block_size + 8, y * block_size, self.dock, block_size, block_size)
 
     def start_game(self):
         def is_completed():
