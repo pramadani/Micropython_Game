@@ -1,0 +1,1 @@
+Utility is a helper tool that can be used in conjunction with the OLED driver. To use it, Python (not MicroPython) must be used, which means it should be done on a computer, not a microcontroller.
