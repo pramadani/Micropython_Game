@@ -1,4 +1,4 @@
-from ili934xnl import ILI9341, color565
+from ili9341 import ILI9341, color565
 from machine import Pin, SPI
 from machine import Pin, ADC
 from time import sleep
