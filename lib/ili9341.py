@@ -209,32 +209,6 @@ class ILI9341:
                 err += dx
                 y0 += sy
                 
-    def draw_circle(self, center_x, center_y, radius, color):
-        x = radius
-        y = 0
-        p = 1 - radius
-
-        while x >= y:
-            self.pixel(center_x + x, center_y + y, color)
-            self.pixel(center_x - x, center_y + y, color)
-            self.pixel(center_x + x, center_y - y, color)
-            self.pixel(center_x - x, center_y - y, color)
-            self.pixel(center_x + y, center_y + x, color)
-            self.pixel(center_x - y, center_y + x, color)
-            self.pixel(center_x + y, center_y - x, color)
-            self.pixel(center_x - y, center_y - x, color)
-
-            y += 1
-            if p < 0:
-                p += 2 * y + 1
-            else:
-                x -= 1
-                p += 2 * (y - x) + 1
-
-        for y in range(center_y - radius, center_y + radius + 1):
-            for x in range(center_x - radius, center_x + radius + 1):
-                if (x - center_x) ** 2 + (y - center_y) ** 2 <= radius ** 2:
-                    self.pixel(x, y, color)
                     
     def draw_framebuf(self, fb, x0, y0, x1, y1):
         width = x1 - x0 + 1
@@ -278,6 +252,34 @@ class ILI9341:
         if rest != 0:
             mv = memoryview(self._buf)
             self._data(mv[:rest*2])
+
+    def draw_circle(self, center_x, center_y, radius, color):
+        x = radius
+        y = 0
+        p = 1 - radius
+
+        while x >= y:
+            self.pixel(center_x + x, center_y + y, color)
+            self.pixel(center_x - x, center_y + y, color)
+            self.pixel(center_x + x, center_y - y, color)
+            self.pixel(center_x - x, center_y - y, color)
+            self.pixel(center_x + y, center_y + x, color)
+            self.pixel(center_x - y, center_y + x, color)
+            self.pixel(center_x + y, center_y - x, color)
+            self.pixel(center_x - y, center_y - x, color)
+
+            y += 1
+            if p < 0:
+                p += 2 * y + 1
+            else:
+                x -= 1
+                p += 2 * (y - x) + 1
+
+        for y in range(center_y - radius, center_y + radius + 1):
+            for x in range(center_x - radius, center_x + radius + 1):
+                if (x - center_x) ** 2 + (y - center_y) ** 2 <= radius ** 2:
+                    self.pixel(x, y, color)
+
 
     def erase(self):
         self.fill_rectangle(0, 0, self.width, self.height)
